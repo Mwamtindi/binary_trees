@@ -3,13 +3,13 @@
 /**
  * binary_tree_inorder - Goes thro' a binary tree using in-order traversal
  *
- * @tree: Pointer to  root node of the tree to traverse
+ * @tree: Pointer to root node of the tree to traverse
  * @func: Pointer to a func to call for each node
  *
  * If tree or func is NULL do nothing
  */
 
-void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
+void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int))
 {
 	if (tree == NULL || func == NULL)
 		return;
