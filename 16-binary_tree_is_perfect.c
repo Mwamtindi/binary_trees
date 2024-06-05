@@ -10,18 +10,20 @@
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	size_t ht, sz, e;
+	size_t left_ht, right_ht;
 
 	if (tree == NULL)
 		return (0);
 
-	ht = binary_tree_height(tree);
-	sz = binary_tree_size(tree);
+	left_ht = binary_tree_height(tree->left);
+	right_ht = binary_tree_height(tree->right);
 
-	for (e = 0; e <= ht; e++)
+	if (left_ht == right_ht)
 	{
-		if (sz == (1 << e))
+		if (tree->left == NULL && tree->right == NULL)
 			return (1);
+		return (binary_tree_is_perfect(tree->left) &&
+				binary_tree_is_perfect(tree->right));
 	}
 
 	return (0);
