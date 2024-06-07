@@ -1,64 +1,57 @@
 #include "binary_trees.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
  * binary_tree_is_complete - fxn that checks if a binary tree is complete
- * @tree: Pointer to the root node of tree to check
+ * @tree: pointer to the root node of the tree to check
  *
- * Return: 1 if the tree is complete otherwise 0
+ * Return: 1 if the tree is complete
+ *         0 if the tree is not complete
+ *         0 if tree is NULL
  */
-
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	const binary_tree_t **queue;
-	size_t front = 0, rear = 0;
-	int flag = 0;
+	size_t numb;
 
-	if (tree == NULL)
+	if (!tree)
 		return (0);
+	numb = binary_tree_size(tree);
 
-	queue = malloc(sizeof(*queue) * (binary_tree_sz(tree) + 1));
-	if (queue == NULL)
-		return (0);
-
-	queue[rear++] = tree;
-
-	while (front < rear)
-	{
-		const binary_tree_t *current = queue[front++];
-
-		if (current)
-		{
-			if (flag)
-			{
-				free(queue);
-				return (0);
-			}
-			queue[rear++] = current->left;
-			queue[rear++] = current->right;
-		}
-		else
-		{
-			flag = 1;
-		}
-	}
-
-	free(queue);
-	return (1);
+	return (assist_bt_isco(tree, 0, numb));
 }
 
 /**
- * binary_tree_sz - fxn that measures the size of a binary tree
- * @tree: Pointer to the root node of the tree to measure size
+ * assist_bt_isco - fxn that checks if a binary tree is complete
+ * @tree: a pointer to root node of the tree to check
+ * @btid: pointer to the node to be checked
+ * @numb: the number of nodes in the binary tree
  *
- * Return: Size of the tree or 0 if tree is NULL
+ * Return: 1 if the tree is complete
+ *         0 if the tree is not complete, 0 if tree is NULL
  */
-
-size_t binary_tree_sz(const binary_tree_t *tree)
+int assist_bt_isco(const binary_tree_t *tree, size_t btid, size_t numb)
 {
-	if (tree == NULL)
+	if (!tree)
+		return (1);
+
+	if (btid >= numb)
 		return (0);
 
-	return (1 + binary_tree_sz(tree->left) + binary_tree_sz(tree->right));
+	return (assist_bt_isco(tree->left, 2 * btid + 1, numb) &&
+		assist_bt_isco(tree->right, 2 * btid + 2, numb));
+}
+
+/**
+ * binary_tree_size - fxn that measures the size of binary tree
+ * @tree: pointer to the root node of the tree to measure the size
+ *
+ * Return: 0 if tree is NULL
+ */
+
+size_t binary_tree_size(const binary_tree_t *tree)
+{
+	if (!tree)
+		return (0);
+
+	return (binary_tree_size(tree->left) +
+		binary_tree_size(tree->right) + 1);
 }

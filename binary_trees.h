@@ -49,4 +49,5 @@ binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 
 void assist_bt_lo(const binary_tree_t *tree, void (*func)(int), size_t level);
+int assist_bt_isco(const binary_tree_t *tree, size_t btid, size_t numb);
 #endif /* BINARY_TREES_H */
